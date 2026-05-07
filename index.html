@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Henry Sanni | AI Researcher & Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #38bdf8;
+      --sky-dim: #0ea5e9;
+      --navy: #0f172a;
+      --navy-mid: #1e293b;
+      --navy-light: #334155;
+      --slate: #64748b;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --white: #f8fafc;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(15,23,42,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(56,189,248,0.08);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--sky);
+      letter-spacing: -0.5px;
+    }
+
+    nav { display: flex; gap: 36px; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--sky);
+      transition: width 0.25s;
+    }
+
+    nav a:hover { color: var(--sky); }
+    nav a:hover::after { width: 100%; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 8% 80px;
+      gap: 60px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.2);
+      color: var(--sky);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge span {
+      width: 6px; height: 6px;
+      background: var(--sky);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .hero-title .accent { color: var(--sky); }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: var(--sky);
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--sky-dim); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+
+    /* ── PROFILE IMAGE ── */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+
+    .profile-frame {
+      position: relative;
+      width: 340px; height: 340px;
+    }
+
+    .profile-frame::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--sky), transparent 60%, var(--sky));
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .profile-inner {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--navy-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-initials-fallback {
+      font-family: 'Syne', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--sky);
+    }
+
+    .profile-frame .badge-card {
+      position: absolute;
+      bottom: 10px; right: -20px;
+      background: var(--navy-mid);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+    }
+
+    .badge-card .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--sky);
+      line-height: 1;
+    }
+
+    .badge-card .label { color: var(--muted); font-size: 0.72rem; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 8%; position: relative; }
+
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 50px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--navy-mid); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--navy);
+      border: 1px solid rgba(56,189,248,0.1);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .stat-card:hover { border-color: rgba(56,189,248,0.4); transform: translateY(-4px); }
+
+    .stat-card .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--sky);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .desc { color: var(--muted); font-size: 0.82rem; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .project-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--sky), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s;
+    }
+
+    .project-card:hover { border-color: rgba(56,189,248,0.25); transform: translateY(-5px); }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-icon {
+      width: 44px; height: 44px;
+      background: rgba(56,189,248,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.3rem;
+    }
+
+    .project-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .project-card p { color: var(--muted); font-size: 0.875rem; }
+
+    /* ── RESEARCH ── */
+    #research { background: var(--navy-mid); }
+
+    .research-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .research-item {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .research-item:hover { border-color: rgba(56,189,248,0.25); transform: translateX(5px); }
+
+    .research-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sky);
+      min-width: 28px;
+      padding-top: 2px;
+      opacity: 0.6;
+    }
+
+    .research-item p {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ── SKILLS ── */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-group {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 22px;
+      transition: border-color 0.25s;
+    }
+
+    .skill-group:hover { border-color: rgba(56,189,248,0.2); }
+
+    .skill-group h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 14px;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .skill-tag {
+      background: rgba(56,189,248,0.07);
+      border: 1px solid rgba(56,189,248,0.15);
+      color: var(--text);
+      padding: 5px 13px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .skill-tag:hover { background: var(--sky); color: var(--navy); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy-mid); }
+
+    .contact-wrapper {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-wrapper p {
+      color: var(--muted);
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px 22px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .contact-link:hover { border-color: rgba(56,189,248,0.3); transform: translateX(4px); color: var(--sky); }
+
+    .contact-link .icon {
+      width: 36px; height: 36px;
+      background: rgba(56,189,248,0.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-link .link-label { font-size: 0.78rem; color: var(--muted); }
+    .contact-link .link-value { font-size: 0.92rem; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 8%;
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--slate);
+      font-size: 0.85rem;
+    }
+
+    footer span { color: var(--sky); }
+
+    /* ── SCROLL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 110px 6% 70px; }
+      .hero-desc { margin: 0 auto 36px; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .profile-frame { width: 240px; height: 240px; }
+      .profile-frame .badge-card { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { letter-spacing: -1.5px; }
+      section { padding: 70px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Henry Sanni</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span></span> Available for Collaboration</div>
+      <h1 class="hero-title">
+        AI Researcher<br>& <span class="accent">Developer</span>
+      </h1>
+      <p class="hero-desc">
+        I build intelligent systems, medical imaging solutions, and AI-powered applications.
+        Specialising in machine learning, MRI simulation, deep learning, and software engineering.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">Explore My Work →</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="profile-frame">
+        <div class="profile-inner">
+          <!-- Replace the src with your image path, e.g. src="images/henry.jpg" -->
+          <img id="profileImg" src="images/profile.png" alt="Henry Sanni">
+        </div>
+        <div class="badge-card">
+          <div>
+            <div class="num">16+</div>
+            <div class="label">Publications</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-tag">Who I Am</div>
+      <div class="section-title">About Me</div>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>
+          Welcome to my personal website. I am an AI researcher and developer with a deep focus on
+          medical imaging, physics-informed neural networks, and intelligent diagnostic systems.
+        </p>
+        <p>
+          My work bridges the gap between cutting-edge machine learning research and real-world
+          clinical applications — from brain tumour segmentation to COVID-19 diagnosis using MRI fingerprinting.
+        </p>
+        <p>
+          I am passionate about building tools that make a meaningful difference in healthcare,
+          and I enjoy collaborating across disciplines to push the boundaries of what AI can achieve.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="num">16+</div>
+          <div class="desc">Research Publications</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">3+</div>
+          <div class="desc">Major Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">8+</div>
+          <div class="desc">Technical Skills</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">∞</div>
+          <div class="desc">Curiosity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="section-tag">What I Build</div>
+      <div class="section-title">Featured Projects</div>
+    </div>
+    <div class="projects-grid reveal">
+      <div class="project-card">
+        <div class="project-icon">🧠</div>
+        <h3>MRI Simulation Project</h3>
+        <p>Developing MRI simulation models using AI and advanced imaging algorithms to replicate real-world scan conditions.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🗜️</div>
+        <h3>Medical Image Compression</h3>
+        <p>Built deep learning models including autoencoders and PCA-based approaches for efficient compression of MRI datasets.</p>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🔍</div>
+        <h3>Medical Image Segmentation</h3>
+        <p>Developing AI-based Models to segment Medical images, to strengthen early diesease disgnosis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="reveal">
+      <div class="section-tag">Academic Work</div>
+      <div class="section-title">Research & Publications</div>
+    </div>
+    <div class="research-list reveal">
+      <div class="research-item">
+        <span class="research-num">01</span>
+        <p>Development and Implementation of Physics-Informed SegresnetUnet for Brain Tumor Segmentation Using BraTS2020 Dataset</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">02</span>
+        <p>Development of Hybrid Classical-Quantum Framework for Lossy Compression of 2D Magnetic Resonance Images using a Quantum Autoencoder (QAE)</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">03</span>
+        <p>Development of Physics-informed and nnU-Net for Glioblastoma Magnetic Resonance Image Segmentation</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">04</span>
+        <p>Physics-informed UNETR: Brain Tumor Segmentation Combining UNETR Architecture and Physics Constraints Using BraTS2021 Dataset</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">05</span>
+        <p>Development and Implementation of Web-based Machine Learning Model for Disease Diagnosis Using Common Health Indicators</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">06</span>
+        <p>Development of Machine Learning Approach for Fast Diagnosis of Chronic Kidney Disease</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">07</span>
+        <p>Development of Physics-Informed Neural Networks for Computational Magnetic Resonance Imaging of Noradrenergic Neurons</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">08</span>
+        <p>Development of Supervised Machine Learning Algorithms for Detection of Malaria Parasites in Thin Blood Smears Using Orange Software</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">09</span>
+        <p>Evaluation of TumorGrowthToolkit: A Python Package for Simulation and Analysis of Tumor Growth Using Numerical Solvers for Partial Differential Equations</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">10</span>
+        <p>Implementation of Artificial Intelligence-Based Diagnosis of Multiple Sclerosis Using Magnetic Resonance Fingerprinting and Clinical Data</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">11</span>
+        <p>Implementation of Transfer Learning Approach for AI-based Diagnosis of Brain Tumors in Low Resource Settings</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">12</span>
+        <p>Machine Learning Approach to Diagnosis of Pulmonary Arterial Hypertension and Severe Aortic Valve Stenosis Using Magnetic Resonance Relaxometry</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">13</span>
+        <p>Machine Learning-based Medical Image Compression Using PCA and Autoencoders</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">14</span>
+        <p>Denoising of Magnetic Resonance Images of Tumours using Autoencoders</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">15</span>
+        <p>Implementation of K-Means Clustering Method for MRI Tissue Classification of Myelin and Neuroaxonal Integrity in Multiple Sclerosis and NMOSD</p>
+      </div>
+      <div class="research-item">
+        <span class="research-num">16</span>
+        <p>Machine Learning-Based Computational Magnetic Resonance Models for Rapid Diagnosis of COVID-19 Using Magnetic Resonance Fingerprinting Data</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="section-tag">Expertise</div>
+      <div class="section-title">Skills & Technologies</div>
+    </div>
+    <div class="skills-container reveal">
+      <div class="skill-group">
+        <h4>Languages</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>AI / ML</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Deep Learning</span>
+          <span class="skill-tag">Neural Networks</span>
+          <span class="skill-tag">Transfer Learning</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Medical Imaging</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">MRI Simulation</span>
+          <span class="skill-tag">Image Segmentation</span>
+          <span class="skill-tag">Image Compression</span>
+          <span class="skill-tag">MR Fingerprinting</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Data Science</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Data Science</span>
+          <span class="skill-tag">PCA</span>
+          <span class="skill-tag">Autoencoders</span>
+          <span class="skill-tag">K-Means</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-tag">Let's Connect</div>
+      <div class="section-title">Get In Touch</div>
+    </div>
+    <div class="contact-wrapper reveal">
+      <p>I'm open to research collaborations, project opportunities, and interesting conversations about AI and medical imaging.</p>
+      <div class="contact-links">
+        <a href="mailto:sannihenryananyi@email.com" class="contact-link">
+          <div class="icon">✉️</div>
+          <div>
+            <div class="link-label">Email</div>
+            <div class="link-value">sannihenryananyi@email.com</div>
+          </div>
+        </a>
+        <a href="https://github.com/sannihenry" target="_blank" class="contact-link">
+          <div class="icon">💻</div>
+          <div>
+            <div class="link-label">GitHub</div>
+            <div class="link-value">github.com/sannihenry</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/henry-ananyi-sanni" target="_blank" class="contact-link">
+          <div class="icon">🔗</div>
+          <div>
+            <div class="link-label">LinkedIn</div>
+            <div class="link-value">linkedin.com/in/henry-ananyi-sanni</div>
+          </div>
+        </a>
+      </div>
+      <button class="btn-primary" onclick="alert('Thanks for visiting! Reach out via email or LinkedIn.')">Say Hello →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>Henry Sanni</span>. All rights reserved.</p>
+  </footer>
+
+  <script>
+    /* Profile image fallback */
+    const img = document.getElementById('profileImg');
+    if (img) {
+      img.onerror = function () {
+        this.style.display = 'none';
+        const fallback = document.createElement('div');
+        fallback.className = 'profile-initials-fallback';
+        fallback.textContent = 'HS';
+        this.parentNode.appendChild(fallback);
+      };
+    }
+
+    /* Scroll reveal */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* Smooth scroll */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
