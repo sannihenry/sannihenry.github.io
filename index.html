@@ -516,6 +516,73 @@
 
     footer span { color: var(--sky); }
 
+    /* ── EDUCATION ── */
+    #education { background: var(--navy); }
+
+    .education-list { display: flex; flex-direction: column; gap: 22px; }
+
+    .edu-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--sky), transparent);
+    }
+
+    .edu-card:hover { border-color: rgba(56,189,248,0.3); transform: translateX(5px); }
+
+    .edu-icon {
+      width: 52px; height: 52px;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .edu-body { flex: 1; }
+
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+
+    .edu-school {
+      color: var(--sky);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .edu-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.15);
+      color: var(--muted);
+      padding: 3px 12px;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
     /* ── SCROLL ANIMATION ── */
     .reveal {
       opacity: 0;
@@ -550,6 +617,7 @@
     <div class="logo">Henry Sanni</div>
     <nav>
       <a href="#about">About</a>
+      <a href="#education">Education</a>
       <a href="#projects">Projects</a>
       <a href="#research">Research</a>
       <a href="#skills">Skills</a>
@@ -578,7 +646,7 @@
       <div class="profile-frame">
         <div class="profile-inner">
           <!-- Replace the src with your image path, e.g. src="images/henry.jpg" -->
-          <img id="profileImg" src="profile.png" alt="Henry Sanni">
+          <img id="profileImg" src="images/profile.png" alt="Henry Sanni">
         </div>
         <div class="badge-card">
           <div>
@@ -632,6 +700,35 @@
     </div>
   </section>
 
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="reveal">
+      <div class="section-tag">Academic Background</div>
+      <div class="section-title">Education</div>
+    </div>
+    <div class="education-list reveal">
+
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-body">
+          <div class="edu-degree">Master of Science — Medical Physics</div>
+          <div class="edu-school">Federal University of Technology, Minna</div>
+          <span class="edu-badge">Postgraduate · Medical Physics</span>
+        </div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-icon">📊</div>
+        <div class="edu-body">
+          <div class="edu-degree">Master of Science — Data Science</div>
+          <div class="edu-school">University of Pennsylvania</div>
+          <span class="edu-badge">Postgraduate · Data Science</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- PROJECTS -->
   <section id="projects">
     <div class="reveal">
@@ -642,7 +739,7 @@
       <div class="project-card">
         <div class="project-icon">🧠</div>
         <h3>MRI Simulation Project</h3>
-        <p>Developing MRI simulation models using AI and advanced imaging algorithms to replicate real-world scan conditions.</p>
+        <p>Developed MRI simulation models using AI and advanced imaging algorithms to replicate real-world scan conditions.</p>
       </div>
       <div class="project-card">
         <div class="project-icon">🗜️</div>
@@ -651,8 +748,8 @@
       </div>
       <div class="project-card">
         <div class="project-icon">🔍</div>
-        <h3>Medical Image Segmentation</h3>
-        <p>Developing AI-based Models to segment Medical images, to strengthen early diesease disgnosis.</p>
+        <h3>Face Morphing Detection</h3>
+        <p>Developed AI-based detection systems to identify morphed biometric images, strengthening authentication security.</p>
       </div>
     </div>
   </section>
